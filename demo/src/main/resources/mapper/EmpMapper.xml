@@ -4,6 +4,7 @@
 	<select id="getEmpList" resultType="EmpVO">
 		SELECT rownum id, e.* 
 		FROM employees e
+		WHERE DEPARTMENT_ID = #{departmentId}
 	</select>
 	
 	<select id="getEmp" resultType="com.example.demo.emp.service.EmpVO">
@@ -11,4 +12,5 @@
 		FROM EMPLOYEES
 		WHERE EMPLOYEE_ID = #{employeeId}
 	</select>
+	
 </mapper>
