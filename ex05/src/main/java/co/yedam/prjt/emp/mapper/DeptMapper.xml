@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yedam.prjt.emp.mapper.DeptMapper">
+	<select id="count" resultType="int">
+	SELECT COUNT(*) FROM DEPARTMENTS
+	</select>
+	
+	<select id="getDept" resultType="co.yedam.prjt.emp.service.DeptVO">
+		SELECT * FROM (SELECT ROWNUM RN, A.* FROM (
+		SELECT * FROM DEPARTMENTS ORDER BY DEPARTMENT_ID DESC
+		<![CDATA[
+			) A WHERE ROWNUM <= #{last}) WHERE RN >= #{first}
+		]]>
+	</select>
+	
+	<select id="deptSelect" resultType="co.yedam.prjt.emp.service.DeptVO">
+		SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID = #{departmentId}
+	</select>
+	
+	<insert id="insertDept">
+	 INSERT INTO DEPARTMENTS(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+	 VALUES (#{departmentId}, #{departmentName}, #{managerId}, #{locationId})
+	</insert>
+	
+	<update id="updateDept">
+		UPDATE DEPARTMENTS 
+		SET DEPARTMENT_NAME = #{departmentName}, MANAGER_ID = #{managerId}, LOCATION_ID = #{locationId}
+		WHERE DEPARTMENT_ID = #{departmentId}
+	</update>
+	
+	<delete id="deleteDept">
+		DELETE FROM DEPARTMENTS WHERE DEPARTMENT_ID = #{departmentId}
+	</delete>
+	
+	<select id="getEmployeeId" resultType="map">
+		SELECT EMPLOYEE_ID "employeeId", FIRST_NAME "firstName" FROM EMPLOYEES
+	</select>
+	
+	<select id="getLocation" resultType="map">
+		SELECT LOCATION_ID "locationId", CITY "city" FROM LOCATIONS
+	</select>
+</mapper>
