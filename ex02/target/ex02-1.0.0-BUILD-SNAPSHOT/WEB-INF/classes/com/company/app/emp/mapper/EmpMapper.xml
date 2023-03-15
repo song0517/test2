@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.app.emp.mapper.EmpMapper">
+
+<!-- 똑같은 조건을 여러개 사용할 경우 sql안에 넣은 후 id를 기준으로 include통해 생성 -->
+<sql id="condition">
+	<where>
+		<if test="departmentId != null and departmentId !=''">
+			DEPARTMENT_ID = #{departmentId}
+		</if>
+		<if test="firstName != null and firstName != ''">
+			AND FIRST_NAME LIKE '%' || #{firstName} || '%'
+		</if>
+		<!-- 체크박스 이용해서 삭제할때 많이 사용 foreach -->
+		<if test="employeeIds != null">
+			AND EMPLOYEE_ID IN
+				<foreach collection="employeeIds" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+		</if>
+	</where>
+</sql>
+
+<select id="count" resultType="int">
+	SELECT COUNT(*) FROM EMPLOYEES
+	<include refid="condition" />
+</select>
+
+<select id="getEmpAll" resultType="empVO">
+	SELECT *
+	  FROM EMPLOYEES
+	<include refid="condition" />
+</select>
+
+<!-- 별칭은 mybatis-config.xml에서 설정 -->
+<select id="getEmp" resultType="empVO" parameterType="string">
+	SELECT *
+	  FROM EMPLOYEES
+	 WHERE EMPLOYEE_ID = #{value} 
+</select>
+
+<update id="updateName" parameterType="empVO">
+	UPDATE EMPLOYEES
+	   SET FIRST_NAME = #{firstName}
+	 WHERE EMPLOYEE_ID = #{employeeId}
+</update>
+
+<!-- resultType을 map이나 vo로 보낼 수 있다. Map으로 가져올때 key는 모두 대문자로 만들어지기 때문에 AS를 통해서 소문자로 별칭을 지어주면 KEY도 소문자로 나타난다. -->
+<select id="getDeptAll" resultType="map">
+	SELECT DEPARTMENT_ID "department_id", DEPARTMENT_NAME "department_name" FROM DEPARTMENTS
+</select>
+
+<insert id="insertEmp" parameterType="empVO">
+	<selectKey keyProperty="employeeId" resultType="string" order="BEFORE">
+		SELECT MAX(EMPLOYEE_ID)+1 FROM EMPLOYEES
+	</selectKey>
+	INSERT INTO EMPLOYEES(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID)
+	VALUES (#{employeeId}, #{firstName}, #{lastName}, #{email}, #{hireDate}, #{jobId})
+</insert>
+
+<select id="getMenagerCheck" resultType="int">
+	SELECT COUNT(*) FROM EMPLOYEES WHERE MANAGER_ID = #{value}
+</select>
+
+<delete id="deleteEmp">
+	DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = #{value}
+</delete>
+</mapper>
