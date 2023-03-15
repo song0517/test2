@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.market.mapper.MarketMapper">
+	<select id="marketSelectList" resultType="co.cofarm.prj.market.vo.MarketVO">
+		SELECT * FROM MARKET
+	</select>
+	
+	<select id="marketSelect" resultType="co.cofarm.prj.market.vo.MarketVO">
+		SELECT * FROM MARKET WHERE MARKET_NO = #{marketNo}
+	</select>
+	
+	<insert id="marketInsert">
+		INSERT INTO MARKET
+		VALUES(MARKET_SEQ.NEXTVAL, #{farmerId}, #{marketName}, #{marketPhone}, #{marketAdress}, #{marketContent}, #{marketLat}
+				, #{marketLon}, #{marketImage}, #{marketImageSave})
+	</insert>
+</mapper>
+
+	

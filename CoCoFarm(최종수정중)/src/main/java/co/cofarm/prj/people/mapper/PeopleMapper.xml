@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.people.mapper.PeopleMapper">
+	
+	<select id="getFarmerOrders" parameterType="String" resultType="co.cofarm.prj.buyItem.vo.BuyItemVO">
+		SELECT T.ORDER_CODE, T.PRODUCT_CODE, T.PRODUCT_NAME, T.PRODUCT_COUNT, T.CONSUMER_ID, T.FARMER_ID, P.PRODUCT_IMAGE1 IMAGE
+		FROM BUY_ITEM T
+		INNER JOIN PRODUCT P ON P.PRODUCT_CODE = T.PRODUCT_CODE
+		WHERE CONSUMER_ID = #{consumerId}
+	</select>	
+	
+	<select id="getCustomerOrders" resultType="co.cofarm.prj.buyItem.vo.BuyItemVO">
+		SELECT T.ORDER_CODE, T.PRODUCT_CODE, T.PRODUCT_NAME, T.PRODUCT_COUNT, T.CONSUMER_ID, T.FARMER_ID, P.PRODUCT_IMAGE1 IMAGE
+		FROM BUY_ITEM T
+		INNER JOIN PRODUCT P ON P.PRODUCT_CODE = T.PRODUCT_CODE
+		WHERE T.FARMER_ID = #{farmerId}
+	</select>
+		
+	
+</mapper>
+
+	

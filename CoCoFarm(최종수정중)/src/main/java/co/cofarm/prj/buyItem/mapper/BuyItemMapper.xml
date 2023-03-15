@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.buyItem.mapper.BuyItemMapper">
+	
+	<select id="buyItemSelectList"  resultType="co.cofarm.prj.buyItem.vo.BuyItemVO">
+		SELECT * FROM BUY_ITEM WHERE PRODUCT_CODE = #{consumerId}
+	</select>
+	
+	<insert id="buyItemInsert">
+	INSERT INTO BUY_ITEM(ORDER_CODE, PRODUCT_CODE, PRODUCT_NAME, PRODUCT_COUNT, CONSUMER_ID, FARMER_ID)
+	VALUES (#{orderCode}, #{productCode}, #{productName}, #{productCount}, #{consumerId}, #{farmerId})
+	</insert>
+	
+	<!--아이디 중복 체크 -->
+	<select id="isConsumerIdCheck" resultType="boolean" parameterType="co.cofarm.prj.buyItem.vo.BuyItemVO">
+		<![CDATA[
+		SELECT CASE WHEN COUNT(CONSUMER_ID) >= 1 THEN 0 ELSE 1 END AS ID
+		FROM BUY_ITEM 
+		WHERE CONSUMER_ID = #{consumerId} AND PRODUCT_CODE = #{productCode} ]]>
+	</select>
+</mapper>

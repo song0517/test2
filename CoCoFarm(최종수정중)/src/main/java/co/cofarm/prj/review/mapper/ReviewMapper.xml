@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.review.mapper.ReviewMapper">
+	<!-- 전체 리뷰 목록 -->
+	<select id="reviewList" resultType="co.cofarm.prj.review.vo.ReviewVO">
+		SELECT * FROM REVIEW
+	</select>
+	<!-- 상품 별 목록 -->
+	<select id="reviewSelectList" resultType="co.cofarm.prj.review.vo.ReviewVO">
+		SELECT * FROM REVIEW WHERE PRODUCT_CODE = #{productCode}
+	</select>
+	<!-- 개별 리뷰-1건 -->
+	<select id="reviewSelect" resultType="co.cofarm.prj.review.vo.ReviewVO">
+		SELECT * FROM REVIEW WHERE REVIEW_CODE = #{reviewCode}
+	</select>
+	<!-- 리뷰등록 -->	
+	<insert id="reviewInsert" parameterType="co.cofarm.prj.review.vo.ReviewVO">
+		INSERT INTO REVIEW
+		VALUES(REVIEW_SEQ.NEXTVAL, #{productCode}, #{reviewContent}, #{customerId}, SYSDATE)
+	</insert>
+	<!-- 리뷰삭제 -->
+	<delete id="reviewDelete" parameterType="co.cofarm.prj.review.vo.ReviewVO">
+		DELETE REVIEW WHERE REVIEW_CODE = #{reviewCode} AND CUSTOMER_ID = #{customerId}
+	</delete>
+	<!-- 수정 -->
+	<update id="reviewUpdate" parameterType="co.cofarm.prj.review.vo.ReviewVO">
+		UPDATE REVIEW
+		SET REVIEW_CONTENT = #{reviewContent},
+			REVIEW_DATE = SYSDATE
+		WHERE REVIEW_CODE = #{reviewCode}
+		AND CUSTOMER_ID = #{customerId}
+	</update>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.product.mapper.ProductMapper">
+	<!-- 페이징 -->
+	<select id="productPageList" parameterType="int" resultType="co.cofarm.prj.product.vo.ProductVO">
+		SELECT b.* 
+		FROM(SELECT ROWNUM RN, a.* 
+		FROM (SELECT * 
+		           FROM PRODUCT 
+		           ORDER BY PRODUCT_CODE DESC) a
+		      <![CDATA[WHERE ROWNUM <= #{pg}*10)b ]]>
+		WHERE B.RN >= (#{pg}-1)*10+1
+	</select>
+	
+	<!--모든 상품 목록 -->
+	<select id="productList" resultType="co.cofarm.prj.product.vo.ProductVO">
+		SELECT * FROM PRODUCT ORDER BY PRODUCT_DATE
+	</select>
+	
+	<!--분류에따른 상품 목록 -->
+	<select id="productClassList" resultType="co.cofarm.prj.product.vo.ProductVO">
+		SELECT * FROM PRODUCT WHERE PRODUCT_CLASS = #{productClass} ORDER BY PRODUCT_DATE
+	</select>
+	
+	<!--상세보기..ㅎ -->
+	<select id="productSelect" resultType="co.cofarm.prj.product.vo.ProductVO">
+		SELECT * FROM PRODUCT WHERE PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<!-- 상품등록 -->
+	<insert id="productInsert" parameterType="co.cofarm.prj.product.vo.ProductVO">
+		INSERT INTO PRODUCT
+		VALUES(PRODUCT_SEQ.NEXTVAL, #{productClass}, #{productName}, #{productContent}, #{productPrice}
+				, #{farmerId}, SYSDATE, #{productImage1}, #{productImage2})
+	</insert>
+	
+	<!-- 상품삭제 (farmer 마이페이지) -->
+	<delete id="productDelete" parameterType="co.cofarm.prj.product.vo.ProductVO">
+		DELETE PRODUCT
+		WHERE PRODUCT_CODE = #{productCode}
+		AND FARMER_ID = #{farmerID}
+	</delete>
+	
+	<!-- 상품 수정(farmer 마이페이지 -->
+	<update id="productUpdate" parameterType="co.cofarm.prj.product.vo.ProductVO">
+		UPDATE PRODUCT 
+		SET PRODUCT_CLASS = #{PRODUCTCLASS},
+			PRODUCT_NAME = #{PRODUCTNAME},
+			PRODUCT_CONTENT = #{PRODUCTCONTENT},
+			PRODUCT_PRICE = #{PRODUCTPRICE},
+			PRODUCT_DATE = SYSDATE
+		WHERE PRODUCT_CODE = #{productCode}
+		AND FARMER_ID = #{farmerId}
+	</update>
+</mapper>

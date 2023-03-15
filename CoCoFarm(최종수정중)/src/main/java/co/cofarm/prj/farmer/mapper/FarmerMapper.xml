@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.farmer.mapper.FarmerMapper">
+	<select id="farmerSelect" resultType="co.cofarm.prj.farmer.vo.FarmerVO">
+		SELECT *
+		FROM FARMER
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="farmerAcceptList" resultType="co.cofarm.prj.farmer.vo.FarmerVO">
+		SELECT F.* 
+		FROM FARMER F, CUSTOMER C
+		WHERE F.ID =  C.ID
+		AND C.AUTH = 'user'
+	</select>
+	
+	<insert id="farmerInsert">
+		INSERT INTO FARMER
+		VALUES (#{id}, #{farmName}, #{farmPhone} ,#{farmAddress}, #{farmAcc})
+	</insert>
+	
+	<delete id="farmerDelete">
+	</delete>
+	
+	<update id="farmerUpdate">
+		UPDATE FARMER
+			SET id = #{id},
+		   		FARM_NAME = #{farmName},
+		   		FARM_PHONE = #{farmPhone},
+		   		FARM_ADDRESS = #{farmAddress},
+		   		FARM_ACC = #{farmAcc}
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="farmerFind" resultType="co.cofarm.prj.farmer.vo.FarmerVO">
+		SELECT * FROM FARMER WHERE ID=  #{id}
+	</select>
+
+</mapper>

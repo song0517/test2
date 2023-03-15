@@ -1,0 +1,183 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>농장정보수정</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	body, a, h3 {
+		font-family: 'Gowun Dodum';
+	}
+	
+	h3 {
+		font-weight: bold;
+	}
+    	
+	.col-xl-7 {
+		background-color: rgb(236, 243, 233);
+		padding-top: 15px;
+		padding-bottom: 15px;
+		padding-left: 50px;
+		padding-right: 50px;
+		
+		 
+  		transform: translate(-50%, -50%);
+  		box-sizing: border-box;
+  		box-shadow: 5px 5px 5px rgba(0,0,0,.6);
+ 		border-radius: 10px;
+	}
+
+	.billing-form .form-control{
+		color: black !important;
+		background: white !important;
+
+	}
+	label{
+		font-size: 18px !important;
+	}
+
+    </style>
+</head>
+<body>
+
+<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-xl-7 ftco-animate">
+						<form id="place" action="placeUpdate.do?farmCode=${updatePlace.farmCode }&farmPlace=${farmPlace}&farmName=${farmName}&farmAddress=${farmAddress}&farmPhone=${farmPhone}&farmProduct=${farmProduct}&farmContent=${farmContent}" class="billing-form" method="post" enctype="multipart/form-data">
+							<h3 class="mb-4 billing-heading">농장정보수정</h3>
+							<div class="row align-items-end">
+							
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="passwd1" style="font-size: 16px">주요판매품목</label><br>
+										<input name="farmProduct" type="radio" value="fruit">과일
+										<input name="farmProduct" type="radio" value="vegetable">야채
+										<input name="farmProduct" type="radio" value="cereal">곡물
+										<input name="farmProduct" type="radio" value="goods">가공물
+									</div>
+								</div>
+								
+								<div class="w-100"></div>
+								
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="firstname" style="font-size: 16px">농장이름</label>
+										<input type="text" class="form-control" id="farmPlace" name="farmPlace" value="${updatePlace.farmName}">
+									</div>
+									</div>
+									<div class="col-md-6">
+									<div class="form-group">
+										<th>농업인이름</th>
+										<td><input type="text" class="form-control"  id="farmName" name="farmName" value="${updatePlace.farmId}" readonly></td>
+									</div>
+									</div>
+									
+									<div class="col-md-12">
+									<div class="form-group">
+										<labe></label>				
+									</div>
+								</div>
+									
+								<div class="w-100"></div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<div class="form-group">
+											<th>농장주소</th>
+											<td><input type="text" class="form-control" id="farmAddress" name="farmAddress" value="${updatePlace.farmAddress}" readonly></td>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-12">
+									<div class="form-group">
+										<labe></label>				
+									</div>
+								</div>
+								
+								<div class="col-md-12">
+									<div class="form-group">
+										<th>농장전화번호</th>
+										<td><input type="text" class="form-control" id="farmPhone" name="farmPhone" value="${updatePlace.farmPhone}"></td>
+									</div>
+								</div>
+								
+								<div class="col-md-12">
+									<div class="form-group">
+										<labe></label>				
+									</div>
+								</div>
+								
+								<div class="w-100"></div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<th>농장소개</th>
+										<td>
+											<textarea class="form-control" id = "farmContent" name="farmContent" rows="20" cols="100">${updatePlace.farmContent}</textarea><br>
+										</td>
+									</div>
+								</div>
+								
+								<div class="w-100"></div>
+								<div class="w-100"></div> 
+								<div class="w-100"></div>
+								<div class="col-md-12">
+									<div class="form-group mt-4">
+										<input type="submit" class="btn btn-primary py-3 px-4" value="수정">&nbsp;&nbsp;&nbsp;
+										<input type="reset" class="btn btn-primary py-3 px-4" value="취소"></a>
+									</div>
+								</div>
+							</div>
+						</form><!-- END -->
+					</div>
+					<!-- .col-md-8 -->
+				</div>
+			</div>
+		</section> 
+	
+	<script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>	
+</body>
+</html>

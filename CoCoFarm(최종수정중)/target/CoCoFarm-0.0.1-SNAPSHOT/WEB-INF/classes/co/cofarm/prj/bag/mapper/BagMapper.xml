@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.bag.mapper.BagMapper">
+	
+	<select id="bagSelectList" resultType="co.cofarm.prj.bag.vo.BagVO" parameterType="String">
+	SELECT
+		B.PRODUCT_NAME, B.PRODUCT_CODE, B.PRODUCT_PRICE, B.CONSUMER_ID,
+		B.PRODUCT_COUNT QUANTITY, (B.PRODUCT_COUNT * B.PRODUCT_PRICE) SUM,
+		P.PRODUCT_IMAGE1 IMAGE, B.FARMER_ID
+	FROM 
+		SHOPPING_BAG B
+	INNER JOIN
+		PRODUCT P ON P.PRODUCT_CODE = B.PRODUCT_CODE
+	WHERE 
+		CONSUMER_ID = #{id}
+	GROUP BY 
+		B.PRODUCT_CODE, B.PRODUCT_NAME, B.PRODUCT_CODE, B.PRODUCT_PRICE, B.CONSUMER_ID, P.PRODUCT_IMAGE1, B.PRODUCT_COUNT, B.FARMER_ID
+	</select>
+	
+	
+	<select id="bagSelect" resultType="co.cofarm.prj.bag.vo.BagVO">
+	SELECT * FROM SHOPPING_BAG WHERE CONSUMER_ID='USER1'
+	
+	</select>
+
+	<insert id="bagInsert" >
+	INSERT INTO SHOPPING_BAG
+	VALUES(#{productName}, #{productCode}, #{consumerId}, #{productPrice}, #{proudctCount}, #{farmerId})
+	
+	</insert>
+
+
+	<delete id="bagDelete">
+	DELETE FROM SHOPPING_BAG WHERE PRODUCT_CODE =#{productCode}
+
+	</delete>
+
+
+	<update id="bagUpdate">
+	UPDATE SHOPPING_BAG
+	SET PRODUCT_NAME = #{productName},
+		CONSUMER_ID = #{consumerId},
+		PRODUCT_PRICE = #{productPrice}
+		WHERE PRODUCT_CODE = #{productCode}
+	
+	</update>
+
+	<insert id="insertBag" parameterType="java.util.Map">
+		insert into shopping_bag values(#{productName},#{productCode},#{id},#{price});
+	</insert>
+
+	<delete id="deleteBag" parameterType="java.util.Map">
+		delete from shopping_bag where product_code = #{productCode} and consumer_id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.customer.mapper.CustomerMapper">
+	<select id="customerSelectList"  resultType="co.cofarm.prj.customer.vo.CustomerVO">
+		SELECT * FROM CUSTOMER
+		<if test="auth == 'all'">WHERE 1 = 1 </if>
+		<if test="auth == 'user'">WHERE AUTH = #{auth}</if>
+		<if test="auth == 'farmer'">WHERE AUTH = #{auth}</if>
+	</select>
+
+	<select id="customerSelect" resultType="co.cofarm.prj.customer.vo.CustomerVO">
+		SELECT * FROM CUSTOMER
+		WHERE ID = #{id}
+	</select>
+	
+	<insert id="customerInsert">
+	INSERT INTO CUSTOMER (id, password, name, email, phone, address)
+	VALUES (#{id}, #{password}, #{name}, #{email}, #{phone}, #{address})
+	</insert>
+
+	<delete id="customerDelete">
+	</delete>
+	
+	<update id="customerUpdate">
+	UPDATE CUSTOMER 
+	SET PASSWORD = #{password},
+   		NAME = #{name},
+   		EMAIL = #{email},
+   		PHONE = #{phone},
+   		ADDRESS = #{address}
+	WHERE ID = #{id}
+	</update>	
+	
+	<select id="customerLogin" resultType="co.cofarm.prj.customer.vo.CustomerVO">
+		SELECT * FROM CUSTOMER
+		WHERE ID = #{id} AND PASSWORD = #{password}
+	</select>
+	
+	<select id="isCustomerIdCheck" resultType="boolean">
+	SELECT CASE WHEN COUNT(ID) = 1 THEN 0 ELSE 1 END AS ID
+	FROM CUSTOMER WHERE ID = #{id}
+	</select>
+
+	<update id="customerToFarmer">
+	UPDATE CUSTOMER 
+	SET AUTH = 'farmer'
+	WHERE ID = #{id}
+	</update>
+	
+	<update id="passwordChange">
+	UPDATE CUSTOMER 
+	SET PASSWORD = #{chpw}
+	WHERE ID = #{id}
+	</update>
+</mapper>
+	

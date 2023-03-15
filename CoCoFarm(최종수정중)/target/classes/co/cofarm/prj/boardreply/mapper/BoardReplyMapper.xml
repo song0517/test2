@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.boardreply.mapper.BoardReplyMapper">
+	
+	<select id="boardReplyList" resultType="co.cofarm.prj.boardreply.vo.BoardReplyVO">
+		SELECT * FROM BOARD_REPLY WHERE BOARD_CODE = #{boardCode} ORDER BY REPLY_CODE
+	</select>
+	
+	<insert id="boardReplyInsert" parameterType="co.cofarm.prj.boardreply.vo.BoardReplyVO">
+		INSERT INTO BOARD_REPLY 
+		VALUES(BOARDSEQ.NEXTVAL, #{boardCode}, #{boardReplyWriter}, #{boardReplyContent}, SYSDATE)
+	</insert>
+	
+	<delete id="boardReplyDelete" parameterType="co.cofarm.prj.boardreply.vo.BoardReplyVO">
+		DELETE FROM BOARD_REPLY WHERE REPLY_CODE = #{replyCode}
+	</delete>
+	
+	<update id="boardReplyUpdate" parameterType="co.cofarm.prj.board.vo.BoardVO">
+		UPDATE BOARD_REPLY
+		SET BOARD_REPLY_CONTENT = #{boardReplyContent}
+		WHERE REPLY_CODE = #{replyCode}
+	</update>
+	
+</mapper>

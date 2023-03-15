@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.QnA.mapper.QnaMapper">
+	<select id="qnaList" resultType="co.cofarm.prj.QnA.vo.QnAVO">
+		SELECT * FROM QNA ORDER BY QNA_CREATION_DATE
+	</select>
+	
+	<select id="qnaSelectList" resultType="co.cofarm.prj.QnA.vo.QnAVO">
+		SELECT * FROM QNA WHERE PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="qnaSelect" resultType="co.cofarm.prj.QnA.vo.QnAVO">
+		SELECT * FROM QNA WHERE QNA_CODE = #{qnaCode}
+	</select>
+	
+	<insert id="qnaInsert" parameterType="co.cofarm.prj.QnA.vo.QnAVO">
+		INSERT INTO QNA
+		VALUES(QNA_SEQ.NEXTVAL, #{productCode}, #{customerId}, #{qnaTitle}, #{farmerId}, #{qnaContent}, SYSDATE)
+	</insert>
+	
+	<delete id="qnaDelete">
+		DELETE QNA
+		WHERE QNA_CODE = #{qnaCode}
+		AND CUSTOMER_ID = #{customerId}
+	</delete>
+	<update id="qnaUpdate" parameterType="co.cofarm.prj.QnA.vo.QnAVO">
+		UPDATE QNA
+		SET PRODUCT_CODE = #{productCode}
+			QNA_TITLE = #{qnaTitle}
+			QNA_CONTENT = #{qnaContent}
+			QNA_CREATE_DATE = SYSDATE
+			WHERE QNA_CODE = #{qnaCode}
+			CUSTOMER_ID = #{customerId}
+	</update>
+</mapper>

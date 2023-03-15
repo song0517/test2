@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.cofarm.prj.place.mapper.PlaceMapper">
+
+	<select id="placeSelectList"
+		resultType="co.cofarm.prj.place.vo.PlaceVO">
+		SELECT * FROM PLACE
+	</select>
+
+	<select id="placeSelect"
+		resultType="co.cofarm.prj.place.vo.PlaceVO">
+		SELECT * FROM PLACE WHERE FARM_CODE = #{farmCode}
+	</select>
+
+	<select id="placeSelectFarm"
+		resultType="co.cofarm.prj.place.vo.PlaceVO">
+		SELECT * FROM PLACE WHERE FARM_ID = #{farmId}
+	</select>
+	
+	<insert id="placeInsert">
+		INSERT INTO PLACE
+		VALUES(PLACE_SEQ.NEXTVAL, #{farmId}, #{farmAddress}, #{farmPlace}, #{farmName}, #{farmPhone}
+		, #{farmProduct}, #{farmContent}, #{farmImage}, #{farmImageSave}, #{farmLat}, #{farmLon})
+	</insert>
+
+	<update id="placeUpdate">
+		UPDATE PLACE
+		SET FARM_PLACE = #{farmPlace},
+		FARM_ADDRESS = #{farmAddress},
+		FARM_PHONE = #{farmPhone},
+		FARM_PRODUCT = #{farmProduct},
+		FARM_CONTENT = #{farmContent}
+		WHERE FARM_CODE = #{farmCode}
+	</update>
+	
+	<delete id="placeDelete">
+		DELETE FROM PLACE WHERE FARM_CODE = #{farmCode}
+	</delete>
+</mapper>
